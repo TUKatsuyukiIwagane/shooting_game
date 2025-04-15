@@ -1,16 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL/SDL.h>
+#include "player.h"
 
-typedef struct {
-    int x, y, w, h;
-    Uint32 color;
-} Player;
-
-void drawPlayer(SDL_Surface *window, Player *player){
-    SDL_Rect rect = {player->x, player->y, player->w, player->h};
-    SDL_FillRect(window, &rect, player->color);
-}
 
 int main(int argc, char *argv[]){
     SDL_Surface *window;
@@ -26,8 +18,9 @@ int main(int argc, char *argv[]){
         printf("VideoMode初期化失敗\n");
         exit(-1);
     }
-    Player player = {300, 400, 32, 32, SDL_MapRGB(window->format, 255, 255, 255)};
-    
+    Player player;
+    initPlayer(&player, window);
+
     while (running){
         while(SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
@@ -42,18 +35,7 @@ int main(int argc, char *argv[]){
             }
         }
         Uint8 *keystate = SDL_GetKeyState(NULL);
-        if (keystate[SDLK_a]){
-            player.x -= 5;
-        }
-        if (keystate[SDLK_d]){
-            player.x += 5;
-        }
-        if (keystate[SDLK_w]){
-            player.y -= 5;
-        }
-        if (keystate[SDLK_s]){
-            player.y += 5;
-        }
+        updatePlayer(&player, keystate);
         
         SDL_WM_SetCaption("SDL Game", "Software Exp");
         // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
