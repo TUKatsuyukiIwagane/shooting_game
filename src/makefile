@@ -3,7 +3,7 @@ CC = gcc #コンパイラの指定
 CFLAGS_LDFLAGS = `sdl-config --cflags --libs` #SDLヘッダ用フラグ, SDLリンク用フラグ
 
 TARGET = main #出力ファイル名
-SRCS = main.c player.c bullet.c #ソースファイル名
+SRCS = main.c player.c bullet.c enemy.c #ソースファイル名
 
 $(TARGET): $(SRCS)
 	$(CC) -o $(TARGET) $(SRCS) $(CFLAGS_LDFLAGS)

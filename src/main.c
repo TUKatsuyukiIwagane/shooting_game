@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include "player.h"
 #include "bullet.h"
+#include "enemy.h"
 
 
 int main(int argc, char *argv[]){
@@ -11,6 +12,7 @@ int main(int argc, char *argv[]){
     int running = 1;
     int shootCooldown = 0;
 
+    // 初期化処理
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
         printf("SDL初期化失敗\n");
         exit(-1);
@@ -23,7 +25,9 @@ int main(int argc, char *argv[]){
     Player player;
     initPlayer(&player, window);
     initBullets();
+    initEnemies(window->format);
 
+    // ゲームループ
     while (running){
         while(SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
@@ -45,12 +49,18 @@ int main(int argc, char *argv[]){
         }
         if (shootCooldown > 0) shootCooldown--;
         
+        
         SDL_WM_SetCaption("SDL Game", "Software Exp");
         // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
+
+        // 画面の更新
         SDL_FillRect(window, NULL, SDL_MapRGB(window->format, 0, 0, 0));
         drawPlayer(window, &player);
+        updateEnemies();
         updateBullets();
         drawBullets(window);
+        drawEnemies(window);
+        checkBulletEnemyCollision();
         SDL_Flip(window);
         SDL_Delay(16);
     }
