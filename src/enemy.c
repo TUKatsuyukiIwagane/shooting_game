@@ -8,11 +8,12 @@ void initEnemies(SDL_PixelFormat *fmt) {
     for (int i = 0; i < MAX_ENEMIES; i++) {
         enemies[i].x = rand() % 600;
         enemies[i].y = rand() % 200;
-        enemies[i].w = 32;
+        enemies[i].w = 64;
         enemies[i].h = 32;
         enemies[i].alive = 1;
         enemies[i].speed = 1 + rand() % 2;
         enemies[i].color = SDL_MapRGB(fmt, 0, 255, 0);
+        enemies[i].hitpoints = 10;
     }
 }
 
@@ -45,10 +46,12 @@ void checkBulletEnemyCollision() {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (bullets[i].alive) {
             for (int j = 0; j < MAX_ENEMIES; j++) {
-                if (enemies[j].alive && checkCollision(bullets[i].x, bullets[i].y, bullets[i].w, bullets[i].h,
-                                                        enemies[j].x, enemies[j].y, enemies[j].w, enemies[j].h)) {
+                if (enemies[j].alive && checkCollision(bullets[i].x, bullets[i].y, bullets[i].w, bullets[i].h, enemies[j].x, enemies[j].y, enemies[j].w, enemies[j].h)) {
                     bullets[i].alive = 0;
-                    enemies[j].alive = 0;
+                    enemies[j].hitpoints -= 1;
+                    if (enemies[j].hitpoints <= 0) {
+                        enemies[j].alive = 0;
+                    }
                     break;
                 }
             }

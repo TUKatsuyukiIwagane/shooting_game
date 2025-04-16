@@ -2,12 +2,13 @@
 #define ENEMY_H
 #include <SDL/SDL.h>
 
-#define MAX_ENEMIES 100
+#define MAX_ENEMIES 1
 
 typedef struct {
     int x, y, w, h;
     int alive;
     int speed;
+    int hitpoints;
     Uint32 color;
 } Enemy;
 
