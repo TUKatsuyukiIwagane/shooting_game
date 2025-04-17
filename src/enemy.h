@@ -2,7 +2,7 @@
 #define ENEMY_H
 #include <SDL/SDL.h>
 
-#define MAX_ENEMIES 1
+#define MAX_ENEMIES 10
 
 typedef struct {
     int x, y, w, h;

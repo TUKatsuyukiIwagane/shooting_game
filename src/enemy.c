@@ -11,9 +11,9 @@ void initEnemies(SDL_PixelFormat *fmt) {
         enemies[i].w = 64;
         enemies[i].h = 32;
         enemies[i].alive = 1;
-        enemies[i].speed = 1 + rand() % 2;
+        enemies[i].speed = 0 + rand() % 2;
         enemies[i].color = SDL_MapRGB(fmt, 0, 255, 0);
-        enemies[i].hitpoints = 10;
+        enemies[i].hitpoints = 3;
     }
 }
 
