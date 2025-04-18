@@ -5,7 +5,8 @@
 #define MAX_BULLETS 100
 
 typedef struct {
-    int x, y, w, h;
+    int x, y;
+    int w, h;
     int alive;
     int speed;
     Uint32 color;

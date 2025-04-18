@@ -4,7 +4,8 @@
 #include <SDL/SDL.h>
 
 typedef struct {
-    int x, y, w, h;
+    int x, y;
+    int w, h;
     Uint32 color;
 } Player;
 

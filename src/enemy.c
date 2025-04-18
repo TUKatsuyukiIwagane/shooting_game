@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "bullet.h"
+#include "enemy_bullet.h"
 #include <SDL/SDL.h>
 
 Enemy enemies[MAX_ENEMIES];
@@ -17,13 +18,16 @@ void initEnemies(SDL_PixelFormat *fmt) {
     }
 }
 
-void updateEnemies() {
+void updateEnemies(SDL_PixelFormat *fmt) {
     for (int i = 0; i < MAX_ENEMIES; i++) {
         if (enemies[i].alive) {
             enemies[i].y += enemies[i].speed;
-            if (enemies[i].y > 480) {
+            if (enemies[i].y > 720) {
                 enemies[i].y = -32;
                 enemies[i].x = rand() % 600;
+            }
+            if(rand() % 100 < 20) { // 20%の確率で弾を撃つ
+                shootEnemyBullet(enemies[i].x + enemies[i].w / 2 - 4, enemies[i].y + enemies[i].h, fmt);
             }
         }
     }

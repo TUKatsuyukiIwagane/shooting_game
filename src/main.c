@@ -4,6 +4,7 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "enemy_bullet.h"
 
 
 int main(int argc, char *argv[]){
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]){
         exit(-1);
     }
 
-    if ((window = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE)) == NULL){
+    if ((window = SDL_SetVideoMode(1080, 720, 32, SDL_SWSURFACE)) == NULL){
         printf("VideoMode初期化失敗\n");
         exit(-1);
     }
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]){
     initPlayer(&player, window);
     initBullets();
     initEnemies(window->format);
+    initEnemyBullets(window->format);
 
     // ゲームループ
     while (running){
@@ -56,10 +58,12 @@ int main(int argc, char *argv[]){
         // 画面の更新
         SDL_FillRect(window, NULL, SDL_MapRGB(window->format, 0, 0, 0));
         drawPlayer(window, &player);
-        updateEnemies();
+        updateEnemies(window->format);
         updateBullets();
+        updateEnemyBullets();
         drawBullets(window);
         drawEnemies(window);
+        drawEnemyBullets(window);
         checkBulletEnemyCollision();
         SDL_Flip(window);
         SDL_Delay(16);
